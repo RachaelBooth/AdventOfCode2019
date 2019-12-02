@@ -9,39 +9,33 @@ namespace AdventOfCode2019
         void SolvePartTwo();
     }
 
-    public abstract class Solver
+    public abstract class Solver<T>
     {
-        private string inputFilePath;
+        private readonly string inputFilePath;
 
-        public Solver(int day)
+        protected Solver(int day)
         {
-            inputFilePath = $"c:/users/rachael/documents/programming/adventofcode2019/adventofcode2019/day{day}/input.txt";
+            inputFilePath = $"../../../day{day}/input.txt";
         }
 
-
-        public void SolvePartOne()
+        protected IEnumerable<T> ReadInput()
         {
-
+            return ReadInputFromFile(inputFilePath);
         }
 
-        protected IEnumerable<T> ReadInput<T>()
-        {
-            return ReadInputFromFile<T>(inputFilePath);
-        }
-
-        protected IEnumerable<T> ReadInputFromFile<T>(string filePath)
+        protected IEnumerable<T> ReadInputFromFile(string filePath)
         {
             var reader = new StreamReader(filePath);
             string line;
 
             while ((line = reader.ReadLine()) != null)
             {
-                yield return ParseLine<T>(line);
+                yield return ParseLine(line);
             }
 
             reader.Close();
         }
 
-        protected abstract T ParseLine<T>(string line);
+        protected abstract T ParseLine(string line);
     }
 }

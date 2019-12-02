@@ -1,5 +1,6 @@
 ﻿using AdventOfCode2019.Day1;
 using System;
+using AdventOfCode2019.Day2;
 
 namespace AdventOfCode2019
 {
@@ -7,7 +8,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new FuelCounterUpper().SolvePartTwo();
+            new IntcodeComputer().SolvePartTwo();
         }
     }
 }
