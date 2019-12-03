@@ -1,6 +1,4 @@
-﻿using AdventOfCode2019.Day1;
-using System;
-using AdventOfCode2019.Day2;
+﻿using AdventOfCode2019.Day3;
 
 namespace AdventOfCode2019
 {
@@ -8,7 +6,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new IntcodeComputer().SolvePartTwo();
+            new WireFinder().SolvePartTwo();
         }
     }
 }
