@@ -1,4 +1,4 @@
-﻿using AdventOfCode2019.Day3;
+﻿using AdventOfCode2019.Day4;
 
 namespace AdventOfCode2019
 {
@@ -6,7 +6,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new WireFinder().SolvePartTwo();
+            new PasswordFinder().SolvePartTwo();
         }
     }
 }
