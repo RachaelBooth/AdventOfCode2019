@@ -39,8 +39,9 @@ namespace AdventOfCode2019.Shared
         {
             var instructionPointer = 0;
 
-            while (true)
-            {
+            var running = true;
+            while (running)
+            {/*
                 var opcode = Programme[instructionPointer];
                 if (opcode == 99)
                 {
@@ -62,8 +63,21 @@ namespace AdventOfCode2019.Shared
                     _ => throw new Exception("Unknown opcode")
                 };
 
-                instructionPointer += 4;
+                instructionPointer += 4;*/
+
+                var instruction = Programme[instructionPointer];
+                var opcode = instruction % 100;
+                switch (opcode)
+                {
+                    case 99:
+                        // Halt
+                        running = false;
+                        break;
+                    // QQ Not Implemented
+                }
             }
         }
+
+        
     }
 }
