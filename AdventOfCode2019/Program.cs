@@ -1,4 +1,4 @@
-﻿using AdventOfCode2019.Day6;
+﻿using AdventOfCode2019.Day5;
 
 namespace AdventOfCode2019
 {
@@ -6,7 +6,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new UniversalOrbitMap().SolvePartTwo();
+            new ThermalEnvironmentSupervision().SolvePartTwo();
         }
     }
 }
