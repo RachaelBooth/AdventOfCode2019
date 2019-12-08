@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Shared
 {
@@ -12,6 +13,9 @@ namespace AdventOfCode2019.Shared
             Programme = programme;
         }
 
+        // QQ clear up async everywhere
+
+        // QQ - clear this up
         public void Run(Func<int> inputProvider, out List<int> output)
         {
             RunProgramme(inputProvider, out output);
@@ -43,11 +47,16 @@ namespace AdventOfCode2019.Shared
             Programme[2] = verb;
         }
 
-        // For now, only one input
+        // QQ - holdover from pre-signal abstraction, deal with
         private void RunProgramme(Func<int> inputProvider, out List<int> output)
         {
-            output = new List<int>();
+            var signal = new BasicSignal(inputProvider);
+            RunProgramme(signal, signal).RunSynchronously();
+            output = signal.GetOutput();
+        }
 
+        public async Task RunProgramme(Signal inputSignal, Signal outputSignal)
+        {
             var instructionPointer = 0;
 
             var running = true;
@@ -76,14 +85,14 @@ namespace AdventOfCode2019.Shared
                         instructionPointer += 4;
                         break;
                     case 3:
-                        value = inputProvider();
+                        value = await inputSignal.Input();
                         outputPosition = OutputPosition(1, instructionPointer);
                         Programme[outputPosition] = value;
                         instructionPointer += 2;
                         break;
                     case 4:
                         value = ParameterValue(1, instruction, instructionPointer);
-                        output.Add(value);
+                        outputSignal.Output(value);
                         instructionPointer += 2;
                         break;
                     case 5:
@@ -91,7 +100,8 @@ namespace AdventOfCode2019.Shared
                         {
                             var newLocation = ParameterValue(2, instruction, instructionPointer);
                             instructionPointer = newLocation;
-                        } else
+                        }
+                        else
                         {
                             instructionPointer += 3;
                         }
