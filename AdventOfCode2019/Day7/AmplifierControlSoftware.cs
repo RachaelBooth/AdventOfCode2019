@@ -72,11 +72,11 @@ namespace AdventOfCode2019.Day7
 
         private async Task<int> ThrusterSignalFromFeedbackLoop(List<int> phaseSettings)
         {
-            var signalA = new BlockingSignal(phaseSettings[0]);
-            var signalB = new BlockingSignal(phaseSettings[1]);
-            var signalC = new BlockingSignal(phaseSettings[2]);
-            var signalD = new BlockingSignal(phaseSettings[3]);
-            var signalE = new BlockingSignal(phaseSettings[4], 0);
+            var signalA = new WaitingSignal(phaseSettings[0]);
+            var signalB = new WaitingSignal(phaseSettings[1]);
+            var signalC = new WaitingSignal(phaseSettings[2]);
+            var signalD = new WaitingSignal(phaseSettings[3]);
+            var signalE = new WaitingSignal(phaseSettings[4], 0);
             var amplifierA = new IntcodeComputer(originalProgramme);
             var amplifierB = new IntcodeComputer(originalProgramme);
             var amplifierC = new IntcodeComputer(originalProgramme);

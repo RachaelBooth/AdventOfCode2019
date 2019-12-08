@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Shared
 {
-    public class BlockingSignal : Signal
+    public class WaitingSignal : Signal
     {
         private readonly Queue<int> signal;
 
-        public BlockingSignal(params int[] initialValues)
+        public WaitingSignal(params int[] initialValues)
         {
             signal = new Queue<int>();
             foreach (var value in initialValues)
