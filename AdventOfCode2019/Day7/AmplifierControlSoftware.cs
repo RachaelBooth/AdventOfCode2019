@@ -32,19 +32,20 @@ namespace AdventOfCode2019.Day7
 
         private int ThrusterSignal(List<int> phaseSettings)
         {
-            var outputA = GetOutput(phaseSettings[0], 0);
-            var outputB = GetOutput(phaseSettings[1], outputA);
-            var outputC = GetOutput(phaseSettings[2], outputB);
-            var outputD = GetOutput(phaseSettings[3], outputC);
-            var outputE = GetOutput(phaseSettings[4], outputD);
+            var outputA = GetOutput(phaseSettings[0], 0).Result;
+            var outputB = GetOutput(phaseSettings[1], outputA).Result;
+            var outputC = GetOutput(phaseSettings[2], outputB).Result;
+            var outputD = GetOutput(phaseSettings[3], outputC).Result;
+            var outputE = GetOutput(phaseSettings[4], outputD).Result;
             return outputE;
         }
 
-        private int GetOutput(int phaseSetting, int input)
+        private async Task<int> GetOutput(int phaseSetting, int input)
         {
-            var amplifier = new IntcodeComputer(originalProgramme);
-            amplifier.Run(new MultipleInputProvider(phaseSetting, input).GetInput, out var output);
-            return output.First();
+            var signal = new BasicSignal(phaseSetting, input);
+            var amplifier = new IntcodeComputer(originalProgramme, signal);
+            await amplifier.RunProgramme();
+            return signal.GetOutput().First();
         }
 
         public void SolvePartTwo()
@@ -77,17 +78,17 @@ namespace AdventOfCode2019.Day7
             var signalC = new WaitingSignal(phaseSettings[2]);
             var signalD = new WaitingSignal(phaseSettings[3]);
             var signalE = new WaitingSignal(phaseSettings[4], 0);
-            var amplifierA = new IntcodeComputer(originalProgramme);
-            var amplifierB = new IntcodeComputer(originalProgramme);
-            var amplifierC = new IntcodeComputer(originalProgramme);
-            var amplifierD = new IntcodeComputer(originalProgramme);
-            var amplifierE = new IntcodeComputer(originalProgramme);
+            var amplifierA = new IntcodeComputer(originalProgramme, signalE, signalA);
+            var amplifierB = new IntcodeComputer(originalProgramme, signalA, signalB);
+            var amplifierC = new IntcodeComputer(originalProgramme, signalB, signalC);
+            var amplifierD = new IntcodeComputer(originalProgramme, signalC, signalD);
+            var amplifierE = new IntcodeComputer(originalProgramme, signalD, signalE);
             await Task.WhenAll(
-                amplifierA.RunProgramme(inputSignal: signalE, outputSignal: signalA), 
-                amplifierB.RunProgramme(inputSignal: signalA, outputSignal: signalB),
-                amplifierC.RunProgramme(inputSignal: signalB, outputSignal: signalC),
-                amplifierD.RunProgramme(inputSignal: signalC, outputSignal: signalD),
-                amplifierE.RunProgramme(inputSignal: signalD, outputSignal: signalE)
+                amplifierA.RunProgramme(), 
+                amplifierB.RunProgramme(),
+                amplifierC.RunProgramme(),
+                amplifierD.RunProgramme(),
+                amplifierE.RunProgramme()
                );
 
             // This assumes that the final signal E sends has not been read - i.e. they do all work out nicely

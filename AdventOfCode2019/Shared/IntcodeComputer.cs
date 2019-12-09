@@ -6,35 +6,45 @@ namespace AdventOfCode2019.Shared
 {
     public class IntcodeComputer
     {
-        private List<int> Programme;
+        private readonly List<int> Programme;
+        private int relativeBase;
+        private readonly Signal inputSignal;
+        private readonly Signal outputSignal;
+
+        public IntcodeComputer(List<int> programme, Signal inputSignal, Signal outputSignal)
+        {
+            Programme = programme;
+            this.inputSignal = inputSignal;
+            this.outputSignal = outputSignal;
+            relativeBase = 0;
+        }
+
+        public IntcodeComputer(List<int> programme, Signal signal)
+        {
+            Programme = programme;
+            inputSignal = signal;
+            outputSignal = signal;
+            relativeBase = 0;
+        }
 
         public IntcodeComputer(List<int> programme)
         {
             Programme = programme;
+            var signal = new DummySignal();
+            inputSignal = signal;
+            outputSignal = signal;
+            relativeBase = 0;
         }
 
-        // QQ clear up async everywhere
-
-        // QQ - clear this up
-        public void Run(Func<int> inputProvider, out List<int> output)
-        {
-            RunProgramme(inputProvider, out output);
-        }
-
-        // QQ - nasty
-        public int GetResult(int noun, int verb)
-        {
-            SetUpProgramme(noun, verb);
-            static int dummyInputProvider() => 0;
-            var output = new List<int>();
-            RunProgramme(dummyInputProvider, out output);
-            return Programme[0];
-        }
-
-        private void SetUpProgramme(int noun, int verb)
+        public void SetValues(int noun, int verb)
         {
             SetNoun(noun);
             SetVerb(verb);
+        }
+
+        public int GetZeroValue()
+        {
+            return Programme[0];
         }
 
         private void SetNoun(int noun)
@@ -47,15 +57,7 @@ namespace AdventOfCode2019.Shared
             Programme[2] = verb;
         }
 
-        // QQ - holdover from pre-signal abstraction, deal with
-        private void RunProgramme(Func<int> inputProvider, out List<int> output)
-        {
-            var signal = new BasicSignal(inputProvider);
-            RunProgramme(signal, signal).RunSynchronously();
-            output = signal.GetOutput();
-        }
-
-        public async Task RunProgramme(Signal inputSignal, Signal outputSignal)
+        public async Task RunProgramme()
         {
             var instructionPointer = 0;
 
@@ -166,7 +168,7 @@ namespace AdventOfCode2019.Shared
             return Programme[instructionPointer + paramNumber];
         }
 
-        private ParameterMode GetParameterMode(int instruction, int paramNumber)
+        private static ParameterMode GetParameterMode(int instruction, int paramNumber)
         {
             return (ParameterMode) ((instruction / Math.Pow(10, 1 + paramNumber)) % 10);
         }

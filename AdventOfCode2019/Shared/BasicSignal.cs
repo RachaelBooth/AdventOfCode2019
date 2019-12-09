@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Shared
 {
     public class BasicSignal : Signal
     {
-        private Func<int> inputProvider;
+        private List<int> inputs;
+        private int nextInputIndex = 0;
         private List<int> output;
 
-        public BasicSignal(Func<int> inputProvider)
+        public BasicSignal(params int[] inputValues)
         {
             output = new List<int>();
-            this.inputProvider = inputProvider;
+            inputs = inputValues.ToList();
         }
 
         public void Output(int value)
@@ -22,7 +24,13 @@ namespace AdventOfCode2019.Shared
 
         public Task<int> Input()
         {
-            return Task.FromResult(inputProvider());
+            if (nextInputIndex > inputs.Count)
+            {
+                throw new Exception("Requested unexpected number of inputs");
+            }
+            var value = inputs[nextInputIndex];
+            nextInputIndex += 1;
+            return Task.FromResult(value);
         }
 
         public List<int> GetOutput()

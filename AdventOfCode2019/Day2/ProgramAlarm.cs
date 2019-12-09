@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AdventOfCode2019.Shared;
 
 namespace AdventOfCode2019.Day2
@@ -16,7 +17,7 @@ namespace AdventOfCode2019.Day2
 
         public void SolvePartOne()
         {
-            var result = new IntcodeComputer(initialProgramme).GetResult(12, 2);
+            var result = GetProgrammeResult(12, 2).Result;
             Console.WriteLine(result);
         }
 
@@ -28,7 +29,7 @@ namespace AdventOfCode2019.Day2
                 var verb = 0;
                 while (verb < 100)
                 {
-                    var result = new IntcodeComputer(initialProgramme).GetResult(noun, verb);
+                    var result = GetProgrammeResult(noun, verb).Result;
                     if (result == 19690720)
                     {
                         // Done
@@ -42,6 +43,14 @@ namespace AdventOfCode2019.Day2
                 noun++;
             }
             Console.WriteLine("Not found");
+        }
+
+        private async Task<int> GetProgrammeResult(int noun, int verb)
+        {
+            var computer = new IntcodeComputer(initialProgramme);
+            computer.SetValues(noun, verb);
+            await computer.RunProgramme();
+            return computer.GetZeroValue();
         }
 
         protected override int ParseLine(string line)
