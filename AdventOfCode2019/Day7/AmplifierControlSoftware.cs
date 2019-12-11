@@ -8,11 +8,11 @@ namespace AdventOfCode2019.Day7
 {
     public class AmplifierControlSoftware : Solver<int>
     {
-        private readonly List<int> originalProgramme;
+        private readonly List<long> originalProgramme;
 
         public AmplifierControlSoftware() : base(7)
         {
-            originalProgramme = ReadInput().ToList();
+            originalProgramme = ReadInput().Select(i => (long) i).ToList();
         }
 
         public void SolvePartOne()
@@ -24,13 +24,13 @@ namespace AdventOfCode2019.Day7
                 var thrusterSignal = ThrusterSignal(permutation.ToList());
                 if (thrusterSignal > maxThrusterSignal)
                 {
-                    maxThrusterSignal = thrusterSignal;
+                    maxThrusterSignal = (int) thrusterSignal;
                 }
             }
             Console.WriteLine($"Max thruster signal: {maxThrusterSignal}");
         }
 
-        private int ThrusterSignal(List<int> phaseSettings)
+        private long ThrusterSignal(List<int> phaseSettings)
         {
             var outputA = GetOutput(phaseSettings[0], 0).Result;
             var outputB = GetOutput(phaseSettings[1], outputA).Result;
@@ -40,7 +40,7 @@ namespace AdventOfCode2019.Day7
             return outputE;
         }
 
-        private async Task<int> GetOutput(int phaseSetting, int input)
+        private async Task<long> GetOutput(int phaseSetting, long input)
         {
             var signal = new BasicSignal(phaseSetting, input);
             var amplifier = new IntcodeComputer(originalProgramme, signal);
@@ -65,13 +65,13 @@ namespace AdventOfCode2019.Day7
                 var thrusterSignal = await ThrusterSignalFromFeedbackLoop(permutation.ToList());
                 if (thrusterSignal > maxThrusterSignal)
                 {
-                    maxThrusterSignal = thrusterSignal;
+                    maxThrusterSignal = (int) thrusterSignal;
                 }
             }
             return maxThrusterSignal;
         }
 
-        private async Task<int> ThrusterSignalFromFeedbackLoop(List<int> phaseSettings)
+        private async Task<long> ThrusterSignalFromFeedbackLoop(List<int> phaseSettings)
         {
             var signalA = new WaitingSignal(phaseSettings[0]);
             var signalB = new WaitingSignal(phaseSettings[1]);

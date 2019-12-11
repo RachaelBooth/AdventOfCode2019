@@ -7,22 +7,22 @@ namespace AdventOfCode2019.Shared
 {
     public class BasicSignal : Signal
     {
-        private List<int> inputs;
+        private List<long> inputs;
         private int nextInputIndex = 0;
-        private List<int> output;
+        private List<long> output;
 
-        public BasicSignal(params int[] inputValues)
+        public BasicSignal(params long[] inputValues)
         {
-            output = new List<int>();
+            output = new List<long>();
             inputs = inputValues.ToList();
         }
 
-        public void Output(int value)
+        public void Output(long value)
         {
             output.Add(value);
         }
 
-        public Task<int> Input()
+        public Task<long> Input()
         {
             if (nextInputIndex > inputs.Count)
             {
@@ -33,7 +33,7 @@ namespace AdventOfCode2019.Shared
             return Task.FromResult(value);
         }
 
-        public List<int> GetOutput()
+        public List<long> GetOutput()
         {
             return output;
         }

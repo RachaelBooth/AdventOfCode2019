@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2019.Day5
 {
-    public class ThermalEnvironmentSupervision : Solver<int>
+    public class ThermalEnvironmentSupervision : Solver<long>
     {
         public ThermalEnvironmentSupervision() : base(5) { }
 
@@ -22,7 +22,7 @@ namespace AdventOfCode2019.Day5
             Console.WriteLine($"Diagnostic Code: {outputCodes.Last()}");
         }
 
-        private async Task<List<int>> GetOutputCodes(int inputValue)
+        private async Task<List<long>> GetOutputCodes(int inputValue)
         {
             var signal = new BasicSignal(inputValue);
             var computer = new IntcodeComputer(ReadInput().ToList(), signal);
@@ -30,9 +30,9 @@ namespace AdventOfCode2019.Day5
             return signal.GetOutput();
         }
 
-        protected override int ParseLine(string line)
+        protected override long ParseLine(string line)
         {
-            return int.Parse(line);
+            return long.Parse(line);
         }
     }
 }

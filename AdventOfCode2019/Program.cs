@@ -1,4 +1,5 @@
 ﻿using AdventOfCode2019.Day8;
+using AdventOfCode2019.Day9;
 
 namespace AdventOfCode2019
 {
@@ -6,7 +7,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new SpaceFormatImageProcessor().SolvePartTwo();
+            new SensorBoost().SolvePartTwo();
         }
     }
 }

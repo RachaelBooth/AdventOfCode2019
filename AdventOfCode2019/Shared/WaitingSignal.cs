@@ -5,23 +5,23 @@ namespace AdventOfCode2019.Shared
 {
     public class WaitingSignal : Signal
     {
-        private readonly Queue<int> signal;
+        private readonly Queue<long> signal;
 
         public WaitingSignal(params int[] initialValues)
         {
-            signal = new Queue<int>();
+            signal = new Queue<long>();
             foreach (var value in initialValues)
             {
                 signal.Enqueue(value);
             }
         }
 
-        public void Output(int value)
+        public void Output(long value)
         {
             signal.Enqueue(value);
         }
 
-        public async Task<int> Input()
+        public async Task<long> Input()
         {
             while (true)
             {

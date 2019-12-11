@@ -4,7 +4,7 @@ namespace AdventOfCode2019.Shared
 {
     public interface Signal
     {
-        void Output(int value);
-        Task<int> Input();
+        void Output(long value);
+        Task<long> Input();
     }
 }

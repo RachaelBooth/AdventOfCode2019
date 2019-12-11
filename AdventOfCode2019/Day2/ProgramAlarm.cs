@@ -6,9 +6,9 @@ using AdventOfCode2019.Shared;
 
 namespace AdventOfCode2019.Day2
 {
-    public class ProgramAlarm : Solver<int>
+    public class ProgramAlarm : Solver<long>
     {
-        private List<int> initialProgramme;
+        private List<long> initialProgramme;
 
         public ProgramAlarm() : base(2)
         {
@@ -50,12 +50,12 @@ namespace AdventOfCode2019.Day2
             var computer = new IntcodeComputer(initialProgramme);
             computer.SetValues(noun, verb);
             await computer.RunProgramme();
-            return computer.GetZeroValue();
+            return (int) computer.GetZeroValue();
         }
 
-        protected override int ParseLine(string line)
+        protected override long ParseLine(string line)
         {
-            return int.Parse(line);
+            return long.Parse(line);
         }
     }
 }
