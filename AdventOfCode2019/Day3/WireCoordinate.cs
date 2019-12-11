@@ -1,17 +1,14 @@
 ﻿using System;
+using AdventOfCode2019.Shared;
 
 namespace AdventOfCode2019.Day3
 {
-    public class WireCoordinate
+    public class WireCoordinate : Coordinate
     {
-        public int x;
-        public int y;
         public int steps;
 
-        public WireCoordinate(int x, int y, int steps = 0)
+        public WireCoordinate(int x, int y, int steps = 0) : base(x, y)
         {
-            this.x = x;
-            this.y = y;
             this.steps = steps;
         }
 

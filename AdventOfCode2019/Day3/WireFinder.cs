@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AdventOfCode2019.Shared;
 
 namespace AdventOfCode2019.Day3
 {
     public class WireFinder : Solver<WireLayout>
     {
-        private readonly LocationOnlyComparer LocationOnlyComparer = new LocationOnlyComparer();
+        private readonly LocationOnlyComparer<WireCoordinate> LocationOnlyComparer = new LocationOnlyComparer<WireCoordinate>();
 
         public WireFinder() : base(3) { }
 
