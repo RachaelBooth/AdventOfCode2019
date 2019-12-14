@@ -48,6 +48,11 @@ namespace AdventOfCode2019.Shared
             return Programme[0];
         }
 
+        public void SetZeroValue(long value)
+        {
+            Programme[0] = value;
+        }
+
         private void SetNoun(long noun)
         {
             Programme[1] = noun;
