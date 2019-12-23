@@ -1,4 +1,5 @@
-﻿using AdventOfCode2019.Day13;
+﻿using AdventOfCode2019.Day10;
+using AdventOfCode2019.Day13;
 
 namespace AdventOfCode2019
 {
@@ -6,7 +7,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            new ArcadeCabinet().SolvePartTwo();
+            new AsteroidMonitoring().SolvePartTwo();
         }
     }
 }
