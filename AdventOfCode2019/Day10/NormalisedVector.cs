@@ -6,6 +6,7 @@ namespace AdventOfCode2019.Day10
     {
         public readonly decimal x;
         public readonly decimal y;
+        public readonly int scale;
 
         public NormalisedVector(int x, int y)
         {
@@ -16,7 +17,7 @@ namespace AdventOfCode2019.Day10
                 return;
             }
 
-            var scale = Math.Abs(x) + Math.Abs(y);
+            scale = Math.Abs(x) + Math.Abs(y);
             this.x = (decimal) x / (decimal) scale;
             this.y = (decimal) y / (decimal) scale;
         }

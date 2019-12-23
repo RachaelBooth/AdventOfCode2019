@@ -46,8 +46,15 @@ namespace AdventOfCode2019.Day10
                 }
             }
             var asteroidVectors = asteroids.Where(a => !new LocationOnlyComparer<Coordinate>().Equals(a, bestAsteroid)).Select(a => new NormalisedVector(a.x - bestAsteroid.x, a.y - bestAsteroid.y));
-            var firstQuadrant = asteroidVectors.Where(v => v.x >= 0 && v.y >= 0);
-            var secondQuadrant = asteroidVectors.Where(v => v.x >= 0 && v.y < 0);
+            var firstQuadrant = asteroidVectors.Where(v => v.x >= 0 && v.y >= 0).ToList();
+            var secondQuadrant = asteroidVectors.Where(v => v.x >= 0 && v.y < 0).ToList();
+            var thirdQuadrant = asteroidVectors.Where(v => v.x < 0 && v.y < 0).ToList();
+            var fourthQuadrant = asteroidVectors.Where(v => v.x < 0 && v.y >= 0).ToList();
+
+            var hitOrder = new List<NormalisedVector>();
+
+            var nextVector = firstQuadrant.Where(v => v.x == firstQuadrant.Min(v => v.x));
+
             Console.WriteLine($"Best asteroid at {bestAsteroid.x}, {bestAsteroid.y}");
         }
 
